@@ -16,7 +16,7 @@ def get_random_quote():
 
 @app.route("/chali", methods=["GET"])
 def hello():
-    return jsonify(chali=get_random_quote())
+    return Response(get_random_quote(), mimetype="text/plain; charset=utf-8")
 
 if __name__ == '__main__':
    app.run(debug=True)
