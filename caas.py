@@ -1,22 +1,40 @@
-from flask import Flask, jsonify, Response
+from flask import Flask, render_template
 import random
+import os
 
 app = Flask(__name__)
 
-QUOTE_COUNT = sum(1 for _ in open("chali.txt", "r", encoding="utf-8"))
+QUOTE_FILE = "chali.txt"
+IMAGE_FOLDER = os.path.join("static", "images")
+FEEDBACK_IMAGE_FOLDER = os.path.join("static", "images", "feedback")
 
 
-def get_random_quote():
-    target = random.randint(0, QUOTE_COUNT - 1)
+def random_line(file_path):
+    with open(file_path, "r", encoding="utf-8") as f:
+        return random.choice(f.readlines()).strip()
 
-    with open("chali.txt", "r", encoding="utf-8") as f:
-        for i, line in enumerate(f):
-            if i == target:
-                return line.strip()
 
-@app.route("/chali", methods=["GET"])
-def hello():
-    return Response(get_random_quote(), mimetype="text/plain; charset=utf-8")
+def random_image(folder):
+    valid_ext = (".jpg", ".jpeg", ".png", ".webp", ".gif")
 
-if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=9000)
+    images = [
+        f for f in os.listdir(folder)
+        if os.path.isfile(os.path.join(folder, f))
+        and f.lower().endswith(valid_ext)
+    ]
+
+    return f"/{folder}/{random.choice(images)}"
+
+
+@app.route("/caas")
+def chali():
+    return render_template(
+        "chali.html",
+        quote=random_line(QUOTE_FILE),
+        image_url=random_image(IMAGE_FOLDER),
+        feedback_image=random_image(FEEDBACK_IMAGE_FOLDER)
+    )
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=9000, debug=True)
