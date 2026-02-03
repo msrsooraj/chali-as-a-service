@@ -1,12 +1,19 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 import random
 import os
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-QUOTE_FILE = "chali.txt"
-IMAGE_FOLDER = os.path.join("static", "images")
-FEEDBACK_IMAGE_FOLDER = os.path.join("static", "images", "feedback")
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASE_DIR, "static"),
+    static_url_path="/chali/static"
+)
+
+QUOTE_FILE = os.path.join(BASE_DIR, "chali.txt")
+
+IMAGE_FOLDER = os.path.join(app.static_folder, "images")
+FEEDBACK_IMAGE_FOLDER = os.path.join(app.static_folder, "images", "feedback")
 
 
 def random_line(file_path):
@@ -23,10 +30,18 @@ def random_image(folder):
         and f.lower().endswith(valid_ext)
     ]
 
-    return f"/{folder}/{random.choice(images)}"
+    filename = random.choice(images)
+
+    # Convert filesystem path → URL
+    relative_path = os.path.relpath(
+        os.path.join(folder, filename),
+        app.static_folder
+    )
+
+    return url_for("static", filename=relative_path)
 
 
-@app.route("/chali")
+@app.route("/")
 def chali():
     return render_template(
         "chali.html",
