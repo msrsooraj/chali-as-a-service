@@ -26,7 +26,7 @@ def random_image(folder):
     return f"/{folder}/{random.choice(images)}"
 
 
-@app.route("/caas")
+@app.route("/chali")
 def chali():
     return render_template(
         "chali.html",
