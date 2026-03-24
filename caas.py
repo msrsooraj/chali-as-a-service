@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, jsonify, render_template, url_for
 import random
 import os
 
@@ -9,6 +9,8 @@ app = Flask(
     static_folder=os.path.join(BASE_DIR, "static"),
     static_url_path="/chali/static"
 )
+
+app.json.ensure_ascii = False
 
 QUOTE_FILE = os.path.join(BASE_DIR, "chali.txt")
 
@@ -49,6 +51,11 @@ def chali():
         image_url=random_image(IMAGE_FOLDER),
         feedback_image=random_image(FEEDBACK_IMAGE_FOLDER)
     )
+
+
+@app.route("/api")
+def api():
+    return jsonify({"chali": random_line(QUOTE_FILE)})
 
 
 if __name__ == "__main__":
