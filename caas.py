@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, url_for
+from flask import Flask, jsonify, render_template, send_file, url_for
 import random
 import os
 
@@ -51,6 +51,11 @@ def chali():
         image_url=random_image(IMAGE_FOLDER),
         feedback_image=random_image(FEEDBACK_IMAGE_FOLDER)
     )
+
+
+@app.route("/ads.txt")
+def ads_txt():
+    return send_file(os.path.join(BASE_DIR, "ads.txt"), mimetype="text/plain")
 
 
 @app.route("/api")
