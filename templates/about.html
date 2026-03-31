@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}About — Chali as a Service{% endblock %}
+{% block meta_description %}Learn about Chali as a Service — a small, independently run website serving random Malayalam jokes and memes.{% endblock %}
+{% block og_title %}About — Chali as a Service{% endblock %}
+{% block og_description %}Learn about Chali as a Service — a small, independently run website serving random Malayalam jokes and memes.{% endblock %}
+
+{% block body %}
+<main>
+    <div class="content-page">
+        <h1>About</h1>
+        <p><strong>Chali as a Service</strong> is a small, independently run website that serves up random jokes and memes — just for laughs, nothing more.</p>
+        <p>There are no accounts, no tracking, and no data collection on our end. The site is supported by ads served through Google AdSense.</p>
+
+        <h2>API</h2>
+        <p>Want chali in your own app? We have a simple API:</p>
+        <p style="background: #f6f7fb; padding: 12px 16px; border-radius: 8px; font-family: monospace; font-size: 0.88rem; color: #333;">GET /api</p>
+        <p style="font-size: 0.85rem; color: #777;">Returns a random joke as JSON.</p>
+
+        <p>The ads? Yeah, servers don't run on good vibes — cash venam. Vere vazhi illa..</p>
+
+        <h2>Contribute</h2>
+        <p>Got a good chali? Drop it on <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">GitHub</a>.</p>
+    </div>
+</main>
+{% endblock %}

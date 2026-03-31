@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Contact — Chali as a Service{% endblock %}
+{% block meta_description %}Get in touch with the team behind Chali as a Service.{% endblock %}
+{% block og_title %}Contact — Chali as a Service{% endblock %}
+{% block og_description %}Get in touch with the team behind Chali as a Service.{% endblock %}
+
+{% block body %}
+<main>
+    <div class="content-page">
+        <h1>Contact</h1>
+        <p>Have a question, suggestion, or a chali to share? Reach out through any of the following:</p>
+
+        <h2>Email</h2>
+        <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+
+        <h2>GitHub</h2>
+        <p>Found a bug or want to contribute jokes? Open an issue or pull request on <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">GitHub</a>.</p>
+    </div>
+</main>
+{% endblock %}

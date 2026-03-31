@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, send_file, url_for
+from flask import Flask, jsonify, render_template, request, send_file, url_for
 import random
 import os
 
@@ -13,6 +13,7 @@ app = Flask(
 app.json.ensure_ascii = False
 
 QUOTE_FILE = os.path.join(BASE_DIR, "chali.txt")
+CONTACT_EMAIL = "msrsooraj@protonmail.com"  # TODO: Replace with your actual email address
 
 IMAGE_FOLDER = os.path.join(app.static_folder, "images")
 FEEDBACK_IMAGE_FOLDER = os.path.join(app.static_folder, "images", "feedback")
@@ -53,9 +54,48 @@ def chali():
     )
 
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html", contact_email=CONTACT_EMAIL)
+
+
 @app.route("/ads.txt")
 def ads_txt():
     return send_file(os.path.join(BASE_DIR, "ads.txt"), mimetype="text/plain")
+
+
+@app.route("/robots.txt")
+def robots_txt():
+    sitemap_url = request.url_root.rstrip("/") + "/sitemap.xml"
+    content = f"User-agent: *\nAllow: /\n\nSitemap: {sitemap_url}\n"
+    return content, 200, {"Content-Type": "text/plain"}
+
+
+@app.route("/sitemap.xml")
+def sitemap():
+    base = request.url_root.rstrip("/")
+    pages = ["", "about", "privacy", "terms", "contact"]
+    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    for page in pages:
+        xml.append(f"  <url><loc>{base}/{page}</loc></url>")
+    xml.append("</urlset>")
+    return "\n".join(xml), 200, {"Content-Type": "application/xml"}
 
 
 @app.route("/api")
