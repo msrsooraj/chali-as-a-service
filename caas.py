@@ -21,7 +21,8 @@ FEEDBACK_IMAGE_FOLDER = os.path.join(app.static_folder, "images", "feedback")
 
 def random_line(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
-        return random.choice(f.readlines()).strip()
+        jokes = f.read().split("\n---\n")
+        return random.choice(jokes).strip()
 
 
 def random_image(folder):
