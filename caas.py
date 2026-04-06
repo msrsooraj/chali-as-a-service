@@ -75,9 +75,9 @@ def contact():
     return render_template("contact.html", contact_email=CONTACT_EMAIL)
 
 
-@app.route("/ads.txt")
-def ads_txt():
-    return send_file(os.path.join(BASE_DIR, "ads.txt"), mimetype="text/plain")
+@app.route("/sw.js")
+def sw_js():
+    return send_file(os.path.join(BASE_DIR, "sw.js"), mimetype="application/javascript")
 
 
 @app.route("/robots.txt")
