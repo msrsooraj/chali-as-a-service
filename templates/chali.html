@@ -26,6 +26,53 @@
             color: #777;
             margin: 0;
         }
+
+        .amazon-ad {
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            padding: 18px 20px;
+            text-align: center;
+        }
+
+        .amazon-ad .ad-label {
+            font-size: 0.72rem;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .amazon-ad .ad-title {
+            font-size: 1rem;
+            color: #1a1a1a;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .amazon-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .amazon-links a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #ff9900;
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .amazon-links a:hover {
+            background: #e68a00;
+        }
 {% endblock %}
 
 {% block body %}
@@ -40,6 +87,18 @@
             <img src="{{ image_url }}" alt="Random Malayalam comedy meme">
             <div class="feedback-btn">
                 <button onclick="openModal('feedbackModal')">Give Feedback</button>
+            </div>
+        </div>
+
+        <div class="amazon-ad">
+            <div class="ad-label">Sponsored</div>
+            <div class="ad-title">Check out today's deals on Amazon.in</div>
+            <div class="amazon-links">
+                <a href="https://www.amazon.in/deals?tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Today's Deals</a>
+                <a href="https://www.amazon.in/gp/bestsellers/?tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Best Sellers</a>
+                <a href="https://www.amazon.in/Electronics/b?node=976419031&tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Electronics</a>
+                <a href="https://www.amazon.in/gp/browse.html?node=976389031&tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Books</a>
+                <a href="https://www.amazon.in/Fashion/b?node=6648217031&tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Fashion</a>
             </div>
         </div>
     </div>
