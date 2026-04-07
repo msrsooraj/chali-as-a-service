@@ -27,100 +27,25 @@
             margin: 0;
         }
 
-        .amazon-ad {
-            margin-top: 20px;
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-            padding: 18px 20px;
-            text-align: center;
-        }
-
-        .amazon-ad .ad-label {
-            font-size: 0.72rem;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-        }
-
-        .amazon-ad .ad-title {
-            font-size: 1rem;
-            color: #1a1a1a;
-            margin-bottom: 14px;
-            font-weight: 600;
-        }
-
-        .amazon-featured {
-            margin-top: 20px;
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-            padding: 18px 20px;
-            text-align: center;
-        }
-
-        .amazon-featured .ad-label {
-            font-size: 0.72rem;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-        }
-
-        .amazon-featured a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .amazon-featured .featured-text {
-            font-size: 0.95rem;
-            color: #555;
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-
-        .amazon-featured .featured-text strong {
-            color: #1a1a1a;
-        }
-
-        .amazon-featured .buy-btn {
-            display: inline-block;
-            padding: 10px 24px;
-            background: #ff9900;
-            color: #fff;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-
-        .amazon-featured .buy-btn:hover {
-            background: #e68a00;
-        }
-
-        .amazon-links {
+        .corner-ads {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 8px;
-            justify-content: center;
+            z-index: 50;
         }
 
-        .amazon-links a {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #ff9900;
-            color: #fff;
-            font-size: 0.82rem;
-            font-weight: 600;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background 0.2s;
+        .corner-ads iframe {
+            border: none;
+            border-radius: 4px;
         }
 
-        .amazon-links a:hover {
-            background: #e68a00;
+        @media (max-width: 820px) {
+            .corner-ads {
+                display: none;
+            }
         }
 {% endblock %}
 
@@ -138,28 +63,21 @@
                 <button onclick="openModal('feedbackModal')">Give Feedback</button>
             </div>
         </div>
-
-        <div class="amazon-featured">
-            <div class="ad-label">Sponsored</div>
-            <a href="https://www.amazon.in/Amrutanjan-Strong-Double-Power-Pain/dp/B07FZC9N2H?&linkCode=ll2&tag=msrsooraj-21&linkId=0a819861166ca0a29c3eb6b833d5bbd1&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer nofollow">
-                <div class="featured-text">ചാലി കേട്ട് തലവേദന വന്നോ? 😵<br><strong>Amrutanjan Strong Pain Balm</strong> — ഇപ്പോൾ തന്നെ ഓർഡർ ചെയ്യൂ!</div>
-                <span class="buy-btn">Buy on Amazon.in</span>
-            </a>
-        </div>
-
-        <div class="amazon-ad">
-            <div class="ad-label">Sponsored</div>
-            <div class="ad-title">Check out today's deals on Amazon.in</div>
-            <div class="amazon-links">
-                <a href="https://www.amazon.in/deals?tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Today's Deals</a>
-                <a href="https://www.amazon.in/gp/bestsellers/?tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Best Sellers</a>
-                <a href="https://www.amazon.in/Electronics/b?node=976419031&tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Electronics</a>
-                <a href="https://www.amazon.in/gp/browse.html?node=976389031&tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Books</a>
-                <a href="https://www.amazon.in/Fashion/b?node=6648217031&tag=msrsooraj-21" target="_blank" rel="noopener noreferrer nofollow">Fashion</a>
-            </div>
-        </div>
     </div>
 </main>
+
+<div class="corner-ads">
+    <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin"
+            style="width:120px;height:240px;"
+            marginwidth="0" marginheight="0" scrolling="no" frameborder="0"
+            src="//ws-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=IN&source=ss&ref=as_ss_li_til&ad_type=product_link&tracking_id=msrsooraj-21&language=en_IN&marketplace=amazon&region=IN&placement=B07FZC9N2H&asins=B07FZC9N2H&show_border=true&link_opens_in_new_window=true">
+    </iframe>
+    <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin"
+            style="width:120px;height:240px;"
+            marginwidth="0" marginheight="0" scrolling="no" frameborder="0"
+            src="//ws-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=IN&source=ss&ref=as_ss_li_til&ad_type=product_link&tracking_id=msrsooraj-21&language=en_IN&marketplace=amazon&region=IN&placement=B0B51TG21K&asins=B0B51TG21K&show_border=true&link_opens_in_new_window=true">
+    </iframe>
+</div>
 
 <!-- Feedback Modal -->
 <div class="modal" id="feedbackModal">
