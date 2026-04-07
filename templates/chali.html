@@ -101,7 +101,21 @@
 
         @media (max-width: 820px) {
             .corner-ads {
-                display: none;
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                padding: 20px 16px;
+                width: 100%;
+            }
+
+            .corner-ads .product-card {
+                width: 45%;
+                max-width: 160px;
+            }
+
+            .corner-ads .ad-label {
+                width: 100%;
+                text-align: center;
             }
         }
 {% endblock %}
@@ -123,7 +137,7 @@
     </div>
 </main>
 
-<div class="corner-ads">
+<div class="corner-ads" id="cornerAds">
     <div class="ad-label">Sponsored</div>
     <a class="product-card" href="https://www.amazon.in/Amrutanjan-Strong-Double-Power-Pain/dp/B07FZC9N2H?&linkCode=ll2&tag=msrsooraj-21&linkId=0a819861166ca0a29c3eb6b833d5bbd1&ref_=as_li_ss_tl" target="_blank" rel="noopener noreferrer nofollow">
         <img src="https://m.media-amazon.com/images/I/61TOCaD4hjL._SL250_.jpg" alt="Amrutanjan Strong Pain Balm" loading="lazy">
