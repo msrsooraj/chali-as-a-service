@@ -83,6 +83,29 @@
 
             <p class="github-note">📂 This tool is open source. <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">Review the code on GitHub</a>.</p>
         </div>
+
+        <div class="api-docs">
+            <h2>What is a QR code?</h2>
+            <p>A QR (Quick Response) code is a two-dimensional barcode that can hold far more data than a traditional 1D barcode — URLs, plain text, Wi-Fi credentials, contact cards, and more. A phone camera or scanner reads the pattern of black-and-white squares and decodes it instantly, which is why they've become the standard for menus, payments, event check-ins, and product packaging.</p>
+
+            <h2>Common uses</h2>
+            <ul>
+                <li><strong>Sharing a link</strong> — printed materials, business cards, posters that need to point to a website without typing a URL.</li>
+                <li><strong>Wi-Fi sharing</strong> — encoding network credentials so guests can join by scanning instead of typing a password.</li>
+                <li><strong>Contact info / vCards</strong> — scan-to-save contact details at events or on business cards.</li>
+                <li><strong>Restaurant menus, payments, check-ins</strong> — anywhere a quick scan replaces manual entry.</li>
+            </ul>
+
+            <h2>Why this one is high-definition</h2>
+            <p>This generator uses <strong>High error correction (Level H)</strong>, which means up to 30% of the code can be damaged or obscured (a logo overlay, a smudge, a fold) and it will still scan correctly. Combined with a large box size (20px per module), the output PNG is generated at high resolution — sharp enough to print at larger sizes without pixelating, unlike QR codes generated small and then stretched.</p>
+
+            <h2>Tips for a scannable code</h2>
+            <ul>
+                <li>Keep a quiet zone (white border) around the code — this generator includes one by default.</li>
+                <li>Don't shrink it below roughly 2×2 cm for print, or the modules become too small for a camera to resolve at typical scanning distance.</li>
+                <li>High contrast matters — stick to black-on-white unless you know what you're doing with color contrast ratios.</li>
+            </ul>
+        </div>
     </div>
 </main>
 {% endblock %}

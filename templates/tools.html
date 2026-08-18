@@ -100,6 +100,13 @@
                 <p>Pretty-print, validate, or minify JSON.</p>
             </a>
         </div>
+
+        <div class="api-docs">
+            <h2>Why these tools exist</h2>
+            <p>Chali as a Service started as a joke site — a place for a quick laugh, nothing more. These tools grew out of that same idea: small, single-purpose utilities that solve one problem well, load instantly, and don't ask anything of you. No account, no upsell, no "sign up to continue."</p>
+            <p>Every tool here runs either fully client-side in your browser (Password Generator, Base64, JSON Formatter — your data never leaves your device) or processes your input in server memory just long enough to return a result (QR Code Generator), then discards it immediately. Nothing is logged, stored, or sold. Full details in the <a href="{{ url_for('privacy') }}">Privacy Policy</a>.</p>
+            <p>Every tool also ships an API endpoint, documented on its own page, and the entire codebase is open source on <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">GitHub</a> — you don't have to take our word for any of this.</p>
+        </div>
     </div>
 </main>
 {% endblock %}

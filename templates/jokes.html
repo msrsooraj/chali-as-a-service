@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}All Chalis — Malayalam Jokes Archive | Chali as a Service{% endblock %}
+{% block meta_description %}Browse the full archive of Malayalam jokes (chalis) on Chali as a Service — read them all in one place instead of waiting for a random one.{% endblock %}
+{% block og_title %}All Chalis — Malayalam Jokes Archive{% endblock %}
+{% block og_description %}Browse the full archive of Malayalam jokes (chalis) on Chali as a Service.{% endblock %}
+
+{% block extra_styles %}
+.joke-entry {
+    background: #f6f7fb;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 14px 0;
+    white-space: pre-line;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #1a1a1a;
+}
+
+.joke-number {
+    font-size: 0.75rem;
+    color: #999;
+    margin-bottom: 6px;
+}
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="content-page">
+        <h1>All Chalis</h1>
+        <p>The homepage serves one random chali at a time. If you'd rather read through all of them in one sitting, here they are — every joke currently in circulation on Chali as a Service.</p>
+
+        {% for joke in jokes %}
+        <div class="joke-entry">
+            <div class="joke-number">#{{ loop.index }}</div>
+            {{ joke }}
+        </div>
+        {% endfor %}
+
+        <h2>Got a better one?</h2>
+        <p>This archive grows over time. Got a Malayalam joke worth adding? Contribute it on <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">GitHub</a> — add it to <code>chali.txt</code>, separated from the others with a <code>---</code> line. See the <a href="{{ url_for('about') }}">About</a> page for details.</p>
+    </div>
+</main>
+{% endblock %}

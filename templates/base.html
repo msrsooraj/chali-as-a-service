@@ -335,6 +335,7 @@
             <a class="site-nav-brand" href="{{ url_for('chali') }}">Chali as a Service</a>
             <nav class="site-nav-links">
                 <a href="{{ url_for('chali') }}">Jokes</a>
+                <a href="{{ url_for('jokes') }}">Archive</a>
                 <a href="{{ url_for('about') }}">About</a>
                 <a class="tools-link" href="{{ url_for('tools') }}">🛠️ Tools</a>
             </nav>
@@ -345,6 +346,8 @@
 
     <footer>
         <a href="{{ url_for('chali') }}">Home</a>
+        <span class="separator">&middot;</span>
+        <a href="{{ url_for('jokes') }}">Archive</a>
         <span class="separator">&middot;</span>
         <a href="{{ url_for('tools') }}">Tools</a>
         <span class="separator">&middot;</span>

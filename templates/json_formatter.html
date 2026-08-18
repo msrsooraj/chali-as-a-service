@@ -97,6 +97,24 @@
 
             <p class="github-note">📂 This tool is open source. <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">Review the code on GitHub</a>.</p>
         </div>
+
+        <div class="api-docs">
+            <h2>What is JSON?</h2>
+            <p>JSON (JavaScript Object Notation) is a lightweight, text-based format for representing structured data — objects, arrays, strings, numbers, booleans, and null. It's the de facto format for web APIs, config files, and data interchange between systems, largely because it's both human-readable and easy for machines to parse.</p>
+
+            <h2>Format vs. Minify</h2>
+            <p><strong>Format (pretty-print)</strong> adds indentation and line breaks so nested structures are easy to read — useful when debugging an API response or reviewing a config file. <strong>Minify</strong> strips all unnecessary whitespace, producing the smallest possible representation — useful when you're shipping JSON over the network and every byte counts, since whitespace adds up in large payloads.</p>
+
+            <h2>Common JSON mistakes</h2>
+            <ul>
+                <li><strong>Trailing commas</strong> — <code>{"a": 1, "b": 2,}</code> is invalid JSON (unlike JavaScript object literals, which tolerate this).</li>
+                <li><strong>Single quotes</strong> — JSON requires double quotes for strings and keys; <code>{'a': 1}</code> will fail to parse.</li>
+                <li><strong>Unquoted keys</strong> — <code>{a: 1}</code> is valid JavaScript but invalid JSON; keys must be quoted strings.</li>
+                <li><strong>Comments</strong> — JSON has no comment syntax at all; <code>// like this</code> will break parsing.</li>
+                <li><strong>Unescaped special characters</strong> — literal newlines or unescaped quotes inside a string value will produce a parse error.</li>
+            </ul>
+            <p>This tool validates as it formats — if your JSON is invalid, you'll get a specific error message telling you what broke, instead of a silent failure.</p>
+        </div>
     </div>
 </main>
 {% endblock %}

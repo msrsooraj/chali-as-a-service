@@ -27,6 +27,32 @@
             margin: 0;
         }
 
+        .about-blurb {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 24px 28px;
+            margin-top: 20px;
+            font-size: 0.88rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .about-blurb h2 {
+            font-size: 1rem;
+            color: #1a1a1a;
+            margin: 0 0 8px;
+        }
+
+        .about-blurb a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .about-blurb a:hover {
+            text-decoration: underline;
+        }
+
         .corner-ads {
             position: fixed;
             bottom: 20px;
@@ -133,6 +159,12 @@
             <div class="feedback-btn">
                 <button onclick="openModal('feedbackModal')">Give Feedback</button>
             </div>
+        </div>
+
+        <div class="about-blurb">
+            <h2>What is Chali as a Service?</h2>
+            <p>Chali as a Service is a small, independently run site that serves up random Malayalam jokes ("chalis") and memes — refresh the page for a new one each time. No accounts, no tracking, just a quick laugh.</p>
+            <p>Want to read every joke in one go instead of relying on chance? Check out the <a href="{{ url_for('jokes') }}">full archive</a>. We've also branched out into a small set of <a href="{{ url_for('tools') }}">free, no-signup utility tools</a> (QR codes, password generation, and more) — no data stored, ever.</p>
         </div>
     </div>
 </main>

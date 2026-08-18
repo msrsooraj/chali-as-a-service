@@ -27,10 +27,13 @@ IMAGE_FOLDER = os.path.join(app.static_folder, "images")
 FEEDBACK_IMAGE_FOLDER = os.path.join(app.static_folder, "images", "feedback")
 
 
-def random_line(file_path):
+def all_jokes(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
-        jokes = f.read().split("\n---\n")
-        return random.choice(jokes).strip()
+        return [j.strip() for j in f.read().split("\n---\n") if j.strip()]
+
+
+def random_line(file_path):
+    return random.choice(all_jokes(file_path))
 
 
 def random_image(folder):
@@ -61,6 +64,11 @@ def chali():
         image_url=random_image(IMAGE_FOLDER),
         feedback_image=random_image(FEEDBACK_IMAGE_FOLDER)
     )
+
+
+@app.route("/jokes")
+def jokes():
+    return render_template("jokes.html", jokes=all_jokes(QUOTE_FILE))
 
 
 @app.route("/about")
@@ -239,7 +247,7 @@ def robots_txt():
 def sitemap():
     base = request.url_root.rstrip("/")
     pages = [
-        "", "about", "privacy", "terms", "contact", "tools",
+        "", "jokes", "about", "privacy", "terms", "contact", "tools",
         "qr", "password-generator", "base64", "json-formatter",
     ]
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']

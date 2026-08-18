@@ -87,6 +87,22 @@
 
             <p class="github-note">📂 This tool is open source. <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">Review the code on GitHub</a>.</p>
         </div>
+
+        <div class="api-docs">
+            <h2>What is Base64?</h2>
+            <p>Base64 is an encoding scheme that converts binary or text data into a string made up of 64 printable ASCII characters (A-Z, a-z, 0-9, <code>+</code>, <code>/</code>). It exists because many systems — email, JSON, URLs — were designed to safely carry text, not arbitrary binary bytes. Encoding data as Base64 lets you embed images, files, or binary blobs inside text-based formats without corruption.</p>
+
+            <h2>Common uses</h2>
+            <ul>
+                <li><strong>Email attachments</strong> — MIME encodes attachments as Base64 so they survive transport through text-only mail servers.</li>
+                <li><strong>Data URIs</strong> — embedding small images directly in HTML/CSS (<code>data:image/png;base64,...</code>) instead of a separate file request.</li>
+                <li><strong>API tokens and auth headers</strong> — Basic Auth headers and many API keys are Base64-encoded strings.</li>
+                <li><strong>Storing binary in text fields</strong> — databases or config files that only accept text can hold binary data this way.</li>
+            </ul>
+
+            <h2>Important: Base64 is not encryption</h2>
+            <p>This is the most common misunderstanding. Base64 is <em>encoding</em>, not <em>encryption</em> — anyone can decode it instantly, with no key required (as you can see, this tool does it in your browser with zero setup). Never use Base64 alone to protect sensitive data like passwords or personal information. If you need actual security, use real encryption (AES, etc.) before encoding, or better, don't put sensitive data in a Base64 string at all.</p>
+        </div>
     </div>
 </main>
 {% endblock %}
