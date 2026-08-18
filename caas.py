@@ -236,6 +236,12 @@ def sw_js():
     return send_file(os.path.join(BASE_DIR, "sw.js"), mimetype="application/javascript")
 
 
+@app.route("/ads.txt")
+def ads_txt():
+    content = "google.com, pub-7148483459385293, DIRECT, f08c47fec0942fa0\n"
+    return content, 200, {"Content-Type": "text/plain"}
+
+
 @app.route("/robots.txt")
 def robots_txt():
     sitemap_url = request.url_root.rstrip("/") + "/sitemap.xml"
