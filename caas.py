@@ -1,6 +1,9 @@
-from flask import Flask, jsonify, render_template, request, send_file, url_for
+from flask import Flask, jsonify, render_template, request, send_file, url_for, abort
 import random
 import os
+import io
+import qrcode
+from qrcode.constants import ERROR_CORRECT_H
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -75,6 +78,41 @@ def contact():
     return render_template("contact.html", contact_email=CONTACT_EMAIL)
 
 
+@app.route("/qr")
+def qr():
+    return render_template("qr.html")
+
+
+@app.route("/qr/generate")
+def qr_generate():
+    data = request.args.get("data", "").strip()
+    if not data:
+        abort(400, "Missing 'data' parameter.")
+    if len(data) > 2000:
+        abort(400, "Data too long (max 2000 characters).")
+
+    qr_code = qrcode.QRCode(
+        error_correction=ERROR_CORRECT_H,
+        box_size=20,
+        border=4,
+    )
+    qr_code.add_data(data)
+    qr_code.make(fit=True)
+    img = qr_code.make_image(fill_color="black", back_color="white")
+
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    buf.seek(0)
+
+    as_attachment = request.args.get("dl") == "1"
+    return send_file(
+        buf,
+        mimetype="image/png",
+        as_attachment=as_attachment,
+        download_name="qr-code.png" if as_attachment else None,
+    )
+
+
 @app.route("/sw.js")
 def sw_js():
     return send_file(os.path.join(BASE_DIR, "sw.js"), mimetype="application/javascript")
@@ -90,7 +128,7 @@ def robots_txt():
 @app.route("/sitemap.xml")
 def sitemap():
     base = request.url_root.rstrip("/")
-    pages = ["", "about", "privacy", "terms", "contact"]
+    pages = ["", "about", "privacy", "terms", "contact", "qr"]
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
     xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
     for page in pages:
