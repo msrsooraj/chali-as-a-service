@@ -132,6 +132,61 @@
             font-size: 0.88rem;
         }
 
+        /* Header nav */
+        header.site-nav {
+            width: 100%;
+            background: white;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+        }
+
+        .site-nav-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .site-nav-brand {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .site-nav-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .site-nav-links a {
+            color: #444;
+            text-decoration: none;
+            font-size: 0.92rem;
+            padding: 6px 2px;
+        }
+
+        .site-nav-links a:hover {
+            color: #000;
+        }
+
+        .site-nav-links a.tools-link {
+            color: white;
+            background: #3b82f6;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .site-nav-links a.tools-link:hover {
+            background: #2563eb;
+            color: white;
+        }
+
         /* Footer */
         footer {
             width: 100%;
@@ -202,14 +257,25 @@
 </head>
 <body>
 
+    <header class="site-nav">
+        <div class="site-nav-inner">
+            <a class="site-nav-brand" href="{{ url_for('chali') }}">Chali as a Service</a>
+            <nav class="site-nav-links">
+                <a href="{{ url_for('chali') }}">Jokes</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a class="tools-link" href="{{ url_for('tools') }}">🛠️ Tools</a>
+            </nav>
+        </div>
+    </header>
+
     {% block body %}{% endblock %}
 
     <footer>
         <a href="{{ url_for('chali') }}">Home</a>
         <span class="separator">&middot;</span>
-        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('tools') }}">Tools</a>
         <span class="separator">&middot;</span>
-        <a href="{{ url_for('qr') }}">QR Code</a>
+        <a href="{{ url_for('about') }}">About</a>
         <span class="separator">&middot;</span>
         <a href="{{ url_for('privacy') }}">Privacy</a>
         <span class="separator">&middot;</span>

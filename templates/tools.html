@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Free Tools — Chali as a Service{% endblock %}
+{% block meta_description %}A growing set of free, no-signup tools. No data stored, no database, no tracking.{% endblock %}
+{% block og_title %}Free Tools{% endblock %}
+{% block og_description %}A growing set of free, no-signup tools. No data stored, no database, no tracking.{% endblock %}
+
+{% block extra_styles %}
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.tool-card {
+    display: block;
+    background: #f6f7fb;
+    border-radius: 12px;
+    padding: 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.tool-card:hover {
+    background: #eef1f8;
+    transform: translateY(-2px);
+}
+
+.tool-card .tool-icon {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.tool-card h3 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    color: #1a1a1a;
+}
+
+.tool-card p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.tool-card.coming-soon {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+}
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="content-page">
+        <h1>Free Tools</h1>
+        <p>A small, growing toolbox — free, no signup, no data stored. Everything runs, produces your result, and forgets it.</p>
+
+        <div class="tools-grid">
+            <a class="tool-card" href="{{ url_for('qr') }}">
+                <span class="tool-icon">🔲</span>
+                <h3>QR Code Generator</h3>
+                <p>Turn any text or link into a high-definition QR code.</p>
+            </a>
+
+            <div class="tool-card coming-soon">
+                <span class="tool-icon">🔑</span>
+                <h3>Password Generator</h3>
+                <p>Coming soon.</p>
+            </div>
+
+            <div class="tool-card coming-soon">
+                <span class="tool-icon">🔤</span>
+                <h3>Base64 Encode/Decode</h3>
+                <p>Coming soon.</p>
+            </div>
+
+            <div class="tool-card coming-soon">
+                <span class="tool-icon">🧾</span>
+                <h3>JSON Formatter</h3>
+                <p>Coming soon.</p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

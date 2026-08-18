@@ -78,6 +78,11 @@ def contact():
     return render_template("contact.html", contact_email=CONTACT_EMAIL)
 
 
+@app.route("/tools")
+def tools():
+    return render_template("tools.html")
+
+
 @app.route("/qr")
 def qr():
     return render_template("qr.html")
@@ -128,7 +133,7 @@ def robots_txt():
 @app.route("/sitemap.xml")
 def sitemap():
     base = request.url_root.rstrip("/")
-    pages = ["", "about", "privacy", "terms", "contact", "qr"]
+    pages = ["", "about", "privacy", "terms", "contact", "tools", "qr"]
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
     xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
     for page in pages:
