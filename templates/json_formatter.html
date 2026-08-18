@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Free JSON Formatter & Validator | Chali as a Service{% endblock %}
+{% block meta_description %}Format, validate, and minify JSON instantly, for free. Runs entirely in your browser — nothing is sent to any server.{% endblock %}
+{% block og_title %}Free JSON Formatter & Validator{% endblock %}
+{% block og_description %}Format, validate, and minify JSON instantly, for free. 100% client-side.{% endblock %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "JSON Formatter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "url": "{{ request.url_root.rstrip('/') }}{{ url_for('json_formatter') }}"
+}
+</script>
+{% endblock %}
+
+{% block extra_styles %}
+.jf-form textarea {
+    width: 100%;
+    min-height: 220px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.85rem;
+    resize: vertical;
+    box-sizing: border-box;
+    white-space: pre;
+}
+
+.jf-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.jf-status {
+    font-size: 0.85rem;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: none;
+}
+
+.jf-status.ok {
+    background: #eafbea;
+    color: #1a7a1a;
+    display: block;
+}
+
+.jf-status.error {
+    background: #fdecea;
+    color: #c0392b;
+    display: block;
+}
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="content-page">
+        <h1>JSON Formatter & Validator</h1>
+        <p>Paste JSON to pretty-print, validate, or minify it. Runs entirely in your browser — nothing is sent to any server.</p>
+        <p style="font-size: 0.82rem; color: #777; background: #f6f7fb; padding: 10px 14px; border-radius: 8px;">🔒 100% client-side. See our <a href="{{ url_for('privacy') }}">Privacy Policy</a>.</p>
+
+        <div class="jf-form">
+            <textarea id="jf-input" placeholder='{"key": "value"}'></textarea>
+
+            <div class="jf-actions">
+                <button id="jf-format-btn" type="button">Format</button>
+                <button id="jf-minify-btn" type="button">Minify</button>
+                <button id="jf-copy-btn" class="btn" type="button" style="background:#3b82f6;">Copy</button>
+            </div>
+            <div class="jf-status" id="jf-status"></div>
+        </div>
+
+        <div class="api-docs">
+            <h2>API</h2>
+            <p>Format, validate, or minify JSON programmatically. Input is processed in memory and never logged or stored. Max 8000 characters per request — use the browser tool above for larger payloads (it never touches the server at all).</p>
+
+            <div class="endpoint"><span class="method">GET</span>/api/json/format?json=...</div>
+            <div class="endpoint"><span class="method">GET</span>/api/json/minify?json=...</div>
+
+            <p>Example:</p>
+            <pre>curl "{{ request.url_root.rstrip('/') }}{{ url_for('api_json_format') }}?json=%7B%22b%22%3A2%2C%22a%22%3A1%7D"</pre>
+            <pre>{
+  "result": "{\n  \"b\": 2,\n  \"a\": 1\n}",
+  "valid": true
+}</pre>
+
+            <p>Invalid JSON returns HTTP 400 with <code>{ "error": "Invalid JSON: ..." }</code>.</p>
+
+            <p class="github-note">📂 This tool is open source. <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">Review the code on GitHub</a>.</p>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    var input = document.getElementById('jf-input');
+    var status = document.getElementById('jf-status');
+
+    function showStatus(msg, ok) {
+        status.textContent = msg;
+        status.className = 'jf-status ' + (ok ? 'ok' : 'error');
+    }
+
+    function parse() {
+        try {
+            return { value: JSON.parse(input.value), ok: true };
+        } catch (e) {
+            showStatus('Invalid JSON: ' + e.message, false);
+            return { ok: false };
+        }
+    }
+
+    document.getElementById('jf-format-btn').addEventListener('click', function () {
+        var result = parse();
+        if (!result.ok) return;
+        input.value = JSON.stringify(result.value, null, 2);
+        showStatus('Valid JSON — formatted.', true);
+    });
+
+    document.getElementById('jf-minify-btn').addEventListener('click', function () {
+        var result = parse();
+        if (!result.ok) return;
+        input.value = JSON.stringify(result.value);
+        showStatus('Valid JSON — minified.', true);
+    });
+
+    document.getElementById('jf-copy-btn').addEventListener('click', function () {
+        if (input.value) navigator.clipboard.writeText(input.value);
+    });
+})();
+</script>
+{% endblock %}

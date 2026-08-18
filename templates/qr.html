@@ -65,6 +65,24 @@
         <div class="qr-result" id="qr-result">
             <img id="qr-image" alt="Generated QR code">
         </div>
+
+        <div class="api-docs">
+            <h2>API</h2>
+            <p>Generate QR codes programmatically — returns a PNG image directly (not JSON). Your text is processed in memory and never logged or stored. Max 2000 characters per request.</p>
+
+            <div class="endpoint"><span class="method">GET</span>/qr/generate?data=...</div>
+
+            <table>
+                <tr><th>Param</th><th>Description</th></tr>
+                <tr><td><code>data</code></td><td>Text or URL to encode (required, max 2000 chars)</td></tr>
+                <tr><td><code>dl</code></td><td><code>1</code> to force a download response, omit to view inline</td></tr>
+            </table>
+
+            <p>Example:</p>
+            <pre>curl "{{ request.url_root.rstrip('/') }}{{ url_for('qr_generate') }}?data=https://example.com" -o qr.png</pre>
+
+            <p class="github-note">📂 This tool is open source. <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">Review the code on GitHub</a>.</p>
+        </div>
     </div>
 </main>
 {% endblock %}

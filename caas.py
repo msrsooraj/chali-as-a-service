@@ -2,6 +2,11 @@ from flask import Flask, jsonify, render_template, request, send_file, url_for, 
 import random
 import os
 import io
+import base64
+import binascii
+import json
+import secrets
+import string
 import qrcode
 from qrcode.constants import ERROR_CORRECT_H
 
@@ -88,6 +93,21 @@ def qr():
     return render_template("qr.html")
 
 
+@app.route("/password-generator")
+def password_generator():
+    return render_template("password_generator.html")
+
+
+@app.route("/base64")
+def base64_tool():
+    return render_template("base64_tool.html")
+
+
+@app.route("/json-formatter")
+def json_formatter():
+    return render_template("json_formatter.html")
+
+
 @app.route("/qr/generate")
 def qr_generate():
     data = request.args.get("data", "").strip()
@@ -118,6 +138,91 @@ def qr_generate():
     )
 
 
+@app.errorhandler(400)
+def handle_bad_request(e):
+    if request.path.startswith("/api/"):
+        return jsonify({"error": e.description}), 400
+    return e
+
+
+@app.route("/api/password")
+def api_password():
+    try:
+        length = int(request.args.get("length", 16))
+    except ValueError:
+        abort(400, "'length' must be an integer.")
+    if not 4 <= length <= 128:
+        abort(400, "'length' must be between 4 and 128.")
+
+    def flag(name, default=True):
+        val = request.args.get(name)
+        return default if val is None else val.lower() not in ("false", "0", "")
+
+    charset = ""
+    if flag("uppercase"):
+        charset += string.ascii_uppercase
+    if flag("lowercase"):
+        charset += string.ascii_lowercase
+    if flag("numbers"):
+        charset += string.digits
+    if flag("symbols"):
+        charset += "!@#$%^&*()_+-=[]{}|;:,.<>?"
+
+    if not charset:
+        abort(400, "At least one character set must be enabled.")
+
+    password = "".join(secrets.choice(charset) for _ in range(length))
+    return jsonify({"password": password, "length": length})
+
+
+@app.route("/api/base64/encode")
+def api_base64_encode():
+    text = request.args.get("text", "")
+    if not text:
+        abort(400, "Missing 'text' parameter.")
+    if len(text) > 8000:
+        abort(400, "Text too long (max 8000 characters). Use the browser tool for larger payloads.")
+    result = base64.b64encode(text.encode("utf-8")).decode("ascii")
+    return jsonify({"result": result})
+
+
+@app.route("/api/base64/decode")
+def api_base64_decode():
+    text = request.args.get("text", "")
+    if not text:
+        abort(400, "Missing 'text' parameter.")
+    if len(text) > 8000:
+        abort(400, "Text too long (max 8000 characters). Use the browser tool for larger payloads.")
+    try:
+        result = base64.b64decode(text, validate=True).decode("utf-8")
+    except (binascii.Error, UnicodeDecodeError):
+        abort(400, "Invalid Base64 input.")
+    return jsonify({"result": result})
+
+
+def _validate_json_text(text):
+    if not text:
+        abort(400, "Missing 'json' parameter.")
+    if len(text) > 8000:
+        abort(400, "Input too long (max 8000 characters). Use the browser tool for larger payloads.")
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as e:
+        abort(400, f"Invalid JSON: {e}")
+
+
+@app.route("/api/json/format")
+def api_json_format():
+    parsed = _validate_json_text(request.args.get("json", ""))
+    return jsonify({"result": json.dumps(parsed, indent=2), "valid": True})
+
+
+@app.route("/api/json/minify")
+def api_json_minify():
+    parsed = _validate_json_text(request.args.get("json", ""))
+    return jsonify({"result": json.dumps(parsed, separators=(",", ":")), "valid": True})
+
+
 @app.route("/sw.js")
 def sw_js():
     return send_file(os.path.join(BASE_DIR, "sw.js"), mimetype="application/javascript")
@@ -133,7 +238,10 @@ def robots_txt():
 @app.route("/sitemap.xml")
 def sitemap():
     base = request.url_root.rstrip("/")
-    pages = ["", "about", "privacy", "terms", "contact", "tools", "qr"]
+    pages = [
+        "", "about", "privacy", "terms", "contact", "tools",
+        "qr", "password-generator", "base64", "json-formatter",
+    ]
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
     xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
     for page in pages:

@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Free Tools — Chali as a Service{% endblock %}
-{% block meta_description %}A growing set of free, no-signup tools. No data stored, no database, no tracking.{% endblock %}
-{% block og_title %}Free Tools{% endblock %}
-{% block og_description %}A growing set of free, no-signup tools. No data stored, no database, no tracking.{% endblock %}
+{% block title %}Free Online Tools — QR Code, Password Generator, Base64, JSON | Chali as a Service{% endblock %}
+{% block meta_description %}Free online tools: QR code generator, password generator, Base64 encoder/decoder, JSON formatter. No signup, no data stored, no database, no tracking.{% endblock %}
+{% block og_title %}Free Online Tools{% endblock %}
+{% block og_description %}Free online tools: QR code generator, password generator, Base64 encoder/decoder, JSON formatter. No signup, no data stored.{% endblock %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {"@type": "SoftwareApplication", "position": 1, "name": "QR Code Generator", "url": "{{ request.url_root.rstrip('/') }}{{ url_for('qr') }}", "applicationCategory": "UtilityApplication"},
+    {"@type": "SoftwareApplication", "position": 2, "name": "Password Generator", "url": "{{ request.url_root.rstrip('/') }}{{ url_for('password_generator') }}", "applicationCategory": "UtilityApplication"},
+    {"@type": "SoftwareApplication", "position": 3, "name": "Base64 Encoder/Decoder", "url": "{{ request.url_root.rstrip('/') }}{{ url_for('base64_tool') }}", "applicationCategory": "UtilityApplication"},
+    {"@type": "SoftwareApplication", "position": 4, "name": "JSON Formatter", "url": "{{ request.url_root.rstrip('/') }}{{ url_for('json_formatter') }}", "applicationCategory": "UtilityApplication"}
+  ]
+}
+</script>
+{% endblock %}
 
 {% block extra_styles %}
 .tools-grid {
@@ -67,23 +82,23 @@
                 <p>Turn any text or link into a high-definition QR code.</p>
             </a>
 
-            <div class="tool-card coming-soon">
+            <a class="tool-card" href="{{ url_for('password_generator') }}">
                 <span class="tool-icon">🔑</span>
                 <h3>Password Generator</h3>
-                <p>Coming soon.</p>
-            </div>
+                <p>Create strong, random passwords with custom length and character sets.</p>
+            </a>
 
-            <div class="tool-card coming-soon">
+            <a class="tool-card" href="{{ url_for('base64_tool') }}">
                 <span class="tool-icon">🔤</span>
                 <h3>Base64 Encode/Decode</h3>
-                <p>Coming soon.</p>
-            </div>
+                <p>Convert text to Base64 or decode Base64 back to text.</p>
+            </a>
 
-            <div class="tool-card coming-soon">
+            <a class="tool-card" href="{{ url_for('json_formatter') }}">
                 <span class="tool-icon">🧾</span>
                 <h3>JSON Formatter</h3>
-                <p>Coming soon.</p>
-            </div>
+                <p>Pretty-print, validate, or minify JSON.</p>
+            </a>
         </div>
     </div>
 </main>

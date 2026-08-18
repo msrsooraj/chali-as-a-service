@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Free Base64 Encoder & Decoder | Chali as a Service{% endblock %}
+{% block meta_description %}Encode or decode Base64 text instantly, for free. Runs entirely in your browser — nothing is sent to any server.{% endblock %}
+{% block og_title %}Free Base64 Encoder/Decoder{% endblock %}
+{% block og_description %}Encode or decode Base64 text instantly, for free. 100% client-side.{% endblock %}
+
+{% block schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Base64 Encoder/Decoder",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+  "url": "{{ request.url_root.rstrip('/') }}{{ url_for('base64_tool') }}"
+}
+</script>
+{% endblock %}
+
+{% block extra_styles %}
+.b64-form textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.9rem;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.b64-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.b64-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 16px 0 6px;
+    font-weight: 600;
+}
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="content-page">
+        <h1>Base64 Encoder / Decoder</h1>
+        <p>Encode text to Base64 or decode Base64 back to text. Runs entirely in your browser — nothing is sent to any server.</p>
+        <p style="font-size: 0.82rem; color: #777; background: #f6f7fb; padding: 10px 14px; border-radius: 8px;">🔒 100% client-side. See our <a href="{{ url_for('privacy') }}">Privacy Policy</a>.</p>
+
+        <div class="b64-form">
+            <div class="b64-label">Input</div>
+            <textarea id="b64-input" placeholder="Enter text or Base64..."></textarea>
+
+            <div class="b64-actions">
+                <button id="b64-encode-btn" type="button">Encode</button>
+                <button id="b64-decode-btn" type="button">Decode</button>
+                <button id="b64-copy-btn" class="btn" type="button" style="background:#3b82f6;">Copy Output</button>
+            </div>
+            <p id="b64-error" style="color:#c0392b; font-size:0.85rem; margin-top:10px; display:none;"></p>
+
+            <div class="b64-label">Output</div>
+            <textarea id="b64-output" readonly placeholder="Result will appear here..."></textarea>
+        </div>
+
+        <div class="api-docs">
+            <h2>API</h2>
+            <p>Encode or decode Base64 programmatically. Input is processed in memory and never logged or stored. Max 8000 characters per request — use the browser tool above for larger payloads (it never touches the server at all).</p>
+
+            <div class="endpoint"><span class="method">GET</span>/api/base64/encode?text=...</div>
+            <div class="endpoint"><span class="method">GET</span>/api/base64/decode?text=...</div>
+
+            <p>Example:</p>
+            <pre>curl "{{ request.url_root.rstrip('/') }}{{ url_for('api_base64_encode') }}?text=hello%20world"</pre>
+            <pre>{ "result": "aGVsbG8gd29ybGQ=" }</pre>
+
+            <pre>curl "{{ request.url_root.rstrip('/') }}{{ url_for('api_base64_decode') }}?text=aGVsbG8gd29ybGQ="</pre>
+            <pre>{ "result": "hello world" }</pre>
+
+            <p>Invalid input returns HTTP 400 with <code>{ "error": "..." }</code>.</p>
+
+            <p class="github-note">📂 This tool is open source. <a href="https://github.com/msrsooraj/chali-as-a-service" target="_blank" rel="noopener">Review the code on GitHub</a>.</p>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    var input = document.getElementById('b64-input');
+    var output = document.getElementById('b64-output');
+    var errorBox = document.getElementById('b64-error');
+
+    function showError(msg) {
+        errorBox.textContent = msg;
+        errorBox.style.display = 'block';
+    }
+
+    document.getElementById('b64-encode-btn').addEventListener('click', function () {
+        errorBox.style.display = 'none';
+        try {
+            output.value = btoa(unescape(encodeURIComponent(input.value)));
+        } catch (e) {
+            showError('Could not encode input.');
+        }
+    });
+
+    document.getElementById('b64-decode-btn').addEventListener('click', function () {
+        errorBox.style.display = 'none';
+        try {
+            output.value = decodeURIComponent(escape(atob(input.value.trim())));
+        } catch (e) {
+            showError('Invalid Base64 input.');
+        }
+    });
+
+    document.getElementById('b64-copy-btn').addEventListener('click', function () {
+        if (output.value) navigator.clipboard.writeText(output.value);
+    });
+})();
+</script>
+{% endblock %}

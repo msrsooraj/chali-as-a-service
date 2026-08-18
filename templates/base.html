@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>if(window.innerWidth>820){(function(s){s.dataset.zone='10841430',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))}</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{% block meta_description %}Random Malayalam jokes and memes served fresh — Chali as a Service.{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Chali as a Service{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Your daily dose of Malayalam humour, one random chali at a time.{% endblock %}">
     <meta property="og:type" content="website">
+    <link rel="canonical" href="{{ request.url_root.rstrip('/') }}{{ request.path }}">
     <title>{% block title %}Chali as a Service{% endblock %}</title>
+    {% block schema %}{% endblock %}
     <style>
         * { box-sizing: border-box; }
 
@@ -250,6 +251,78 @@
 
         .close:hover {
             color: #000;
+        }
+
+        /* API docs (shared across tool pages) */
+        .api-docs {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .api-docs h2 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .api-docs .endpoint {
+            background: #f6f7fb;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: 'SFMono-Regular', Consolas, monospace;
+            font-size: 0.85rem;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .api-docs .endpoint .method {
+            color: #1a7a1a;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .api-docs pre {
+            background: #1e1e1e;
+            color: #e6e6e6;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .api-docs table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin: 10px 0;
+        }
+
+        .api-docs th, .api-docs td {
+            text-align: left;
+            padding: 6px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .api-docs th {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .api-docs code {
+            background: #f6f7fb;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .github-note {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #666;
+            background: #f6f7fb;
+            padding: 10px 14px;
+            border-radius: 8px;
         }
 
         {% block extra_styles %}{% endblock %}
